@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Создание статьи')
+@section('title', 'Редактирование статьи')
 
 @section('content')
     <section class="jumbotron text-center">
@@ -9,15 +9,16 @@
         </div>
     </section>
     <div class="container">
-        <form method="POST" action="/posts">
+        <form method="POST" action="/posts/{{ $post->slug }}">
 
             @csrf
+            @method('PATCH')
 
             @include('layout.errors')
 
             <div class="form-group">
                 <label for="slug">Символьный код</label>
-                <input class="form-control" id="slug" name="slug" value="{{ old('slug') }}">
+                <input class="form-control" id="slug" name="slug" value="{{ old('slug', $post->slug) }}">
                 <small id="slugHelp" class="form-text text-muted">
                     Обязательное текстовое поле. Должно состоять только из латинских символов,
                     цифр, символов тире и подчеркивания. Поле должно быть уникальным на все статьи.
@@ -25,27 +26,32 @@
             </div>
             <div class="form-group">
                 <label for="title">Заголовок статьи</label>
-                <input class="form-control" id="title" name="title" value="{{ old('title') }}">
+                <input class="form-control" id="title" name="title" value="{{ old('title', $post->title) }}">
                 <small id="titleHelp" class="form-text text-muted">
                     Не менее 5 и не более 100 символов.
                 </small>
             </div>
             <div class="form-group">
                 <label for="description">Краткое описание статьи</label>
-                <input class="form-control" id="description" name="description" value="{{ old('description') }}">
+                <input class="form-control" id="description" name="description" value="{{ old('description', $post->description) }}">
                 <small id="descriptionHelp" class="form-text text-muted">
                     Не более 255 символов.
                 </small>
             </div>
             <div class="form-group">
                 <label for="post_body">Текст</label>
-                <textarea class="form-control" id="post_body" name="body">{{ old('body') }}</textarea>
+                <textarea class="form-control" id="post_body" name="body">{{ old('body', $post->body) }}</textarea>
             </div>
             <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="published" name="published">
+                <input type="checkbox" class="form-check-input" id="published" name="published" {{ $post->published ? 'checked' : '' }}>
                 <label class="form-check-label" for="published">Опубликовать</label>
             </div>
             <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+        <form method="post" action="/posts/{{ $post->slug }}">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn btn-danger">Удалить</button>
         </form>
     </div>
 @endsection
