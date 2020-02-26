@@ -10,17 +10,17 @@ class FeedbacksController extends Controller
     {
         $feedbacks = Feedback::latest()->get();
         $title = 'Обращения';
-        return view('feedbacks.feedbacks', compact('feedbacks', 'title'));
+        return view('feedbacks.feedbacks', compact('feedbacks'));
     }
 
     public function store()
     {
-        $this->validate(request(), [
+        $data = $this->validate(request(), [
             'email' => 'required|email',
             'message' => 'required',
         ]);
 
-        Feedback::create(request()->all());
+        Feedback::create($data);
 
         return redirect('/feedbacks');
     }

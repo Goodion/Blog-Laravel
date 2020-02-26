@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Блог - skillbox.laravel.">
 
-    <title>{{ $title }} | Skillbox Laravel</title>
+    <title>@yield('title') | Skillbox Laravel</title>
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css">

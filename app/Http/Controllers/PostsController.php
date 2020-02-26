@@ -9,27 +9,24 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::latest()->get();
-        $title = 'Главная';
-        return view('index', compact('posts', 'title'));
+        return view('index', compact('posts'));
     }
 
     public function show(Post $post)
     {
-        $title = $post->slug;
-        return view('posts.show', compact('post', 'title'));
+        return view('posts.show', compact('post'));
     }
 
     public function create()
     {
-        $title = 'Создание статьи';
-        return view('posts.create', compact('title'));
+        return view('posts.create');
     }
 
     public function store()
     {
         $published = request('published') === 'on' ? true : false;
 
-        $this->validate(request(), [
+        $data = $this->validate(request(), [
             'title' => 'required|between:5,100',
             'body' => 'required',
             'slug' => 'required|alpha_dash|unique:posts,slug',
@@ -37,10 +34,10 @@ class PostsController extends Controller
         ]);
 
         Post::create([
-            'title' => request('title'),
-            'body' => request('body'),
-            'slug' => request('slug'),
-            'description' => request('description'),
+            'title' => $data['title'],
+            'body' => $data['body'],
+            'slug' => $data['slug'],
+            'description' => $data['description'],
             'files' => null,
             'published' => $published,
         ]);
