@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\PostCreated;
+use App\Notifications\PostDeleted;
+use App\Notifications\PostUpdated;
 use App\Post,
     App\Tag;
 
@@ -57,6 +60,9 @@ class PostsController extends Controller
             $post->tags()->attach($tag);
         }
 
+        $admin = \App\User::where('email', config('config.admin_email'))->first();
+        $admin->notify(new PostCreated($post));
+
         return redirect('/');
     }
 
@@ -105,6 +111,9 @@ class PostsController extends Controller
             $tag->deleteIfNotUsed();
         }
 
+        $admin = \App\User::where('email', config('config.admin_email'))->first();
+        $admin->notify(new PostUpdated($post));
+
         return redirect('/posts/' . $post->slug);
     }
 
@@ -114,13 +123,15 @@ class PostsController extends Controller
 
         $tagsToDetach = $post->tags->keyBy('name');
 
+        $admin = \App\User::where('email', config('config.admin_email'))->first();
+        $admin->notify(new PostDeleted($post));
+
         $post->delete();
 
         foreach ($tagsToDetach as $tag) {
             $post->tags()->detach($tag);
             $tag->deleteIfNotUsed();
         }
-
 
         return redirect('/');
     }

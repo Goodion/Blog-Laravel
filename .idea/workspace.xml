@@ -2,23 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2063943f-8762-403e-a16e-c9b085d34486" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/skillbox_laravel.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/skillbox_laravel.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Post.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_02_24_110543_create_posts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_02_24_110543_create_posts_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/master.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/sidebar.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/posts/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/nav.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -190,6 +184,10 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
       <path value="$PROJECT_DIR$/vendor/laravel/ui" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/bcmath_compat" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/moontoast/math" />
+      <path value="$PROJECT_DIR$/vendor/laravel/telescope" />
     </include_path>
   </component>
   <component name="ProjectId" id="1Xo4m1Srpcy2erMoMFI3r1qvmMo" />
@@ -241,7 +239,7 @@
       <workItem from="1582635902730" duration="2395000" />
       <workItem from="1582716496381" duration="12148000" />
       <workItem from="1582753686432" duration="7205000" />
-      <workItem from="1582797946009" duration="18410000" />
+      <workItem from="1582797946009" duration="33929000" />
     </task>
     <servers />
   </component>
@@ -262,22 +260,30 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="2510" y="215" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581700220379">
+    <state x="2510" y="215" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582833323862">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2510" y="215" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1581700220379" />
+    <state x="2510" y="215" width="800" height="684" key="#com.intellij.execution.impl.EditConfigurationsDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582833323862" />
     <state x="2648" y="302" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1582539918282">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2648" y="302" width="524" height="509" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582539918282" />
+    <state x="2648" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1582843798009">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2648" y="311" width="524" height="491" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582843798009" />
+    <state x="2659" y="169" width="501" height="775" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#method0" timestamp="1582842470542">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2659" y="169" width="501" height="775" key="#com.jetbrains.php.refactoring.extractMethod.PhpExtractMethodDialog#method0/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582842470542" />
     <state x="2698" y="314" width="424" height="491" key="FileChooserDialogImpl" timestamp="1582638211335">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2698" y="314" width="424" height="491" key="FileChooserDialogImpl/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582638211335" />
-    <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog" timestamp="1582757320733">
+    <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog" timestamp="1582844049958">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2710" y="479" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582757320733" />
+    <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582844049958" />
     <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582720054963" />
     <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog/1920.0.1920.1080/70.27.1850.1053@1920.0.1920.1080" timestamp="1582556812245" />
     <state x="2404" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1582638297476">
@@ -289,15 +295,19 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2808" y="450" width="367" height="237" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582727431903" />
+    <state x="2765" y="318" width="290" height="478" key="com.intellij.database.view.ui.DbObjectDialog" timestamp="1582833085473">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2765" y="318" width="290" height="478" key="com.intellij.database.view.ui.DbObjectDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582833085473" />
     <state x="2571" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1582798055421">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2571" y="381" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582798055421" />
     <state x="2571" y="381" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582716501561" />
-    <state x="2534" y="264" width="751" height="578" key="find.popup" timestamp="1582817984206">
+    <state x="2534" y="264" width="751" height="578" key="find.popup" timestamp="1582840593954">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2534" y="264" width="751" height="578" key="find.popup/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582817984206" />
+    <state x="2534" y="264" width="751" height="578" key="find.popup/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582840593954" />
     <state x="2534" y="264" width="751" height="578" key="find.popup/1920.0.1920.1080/70.27.1850.1053@1920.0.1920.1080" timestamp="1582558986335" />
     <state x="2640" y="466" width="540" height="182" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1582540657722">
       <screen x="1920" y="0" width="1920" height="1080" />

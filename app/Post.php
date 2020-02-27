@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Mail\PostEventMailNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -27,5 +28,10 @@ class Post extends Model
     public function scopeUnpublish($query)
     {
         return $query->where('published', 0);
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class);
     }
 }
