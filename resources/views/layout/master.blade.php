@@ -111,6 +111,8 @@
 
 @include('layout.nav')
 
+@include('layout.flash_message')
+
 @yield('content')
 
 @include('layout.footer')

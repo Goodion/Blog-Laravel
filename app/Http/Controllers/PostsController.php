@@ -63,6 +63,8 @@ class PostsController extends Controller
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostCreated($post));
 
+        flash('Задача успешно создана');
+
         return redirect('/');
     }
 
@@ -114,6 +116,8 @@ class PostsController extends Controller
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostUpdated($post));
 
+        flash('Задача успешно изменена');
+
         return redirect('/posts/' . $post->slug);
     }
 
@@ -132,6 +136,8 @@ class PostsController extends Controller
             $post->tags()->detach($tag);
             $tag->deleteIfNotUsed();
         }
+
+        flash('Задача удалена', 'warning');
 
         return redirect('/');
     }
