@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->boolean('published')->default(false);
             $table->string('slug');
             $table->text('files')->nullable();
+            $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
     }

@@ -31,3 +31,5 @@ Route::get('/admin', function () {
 Route::get('/feedbacks', 'FeedbacksController@index');
 Route::post('/feedbacks', 'FeedbacksController@store');
 
+
+Auth::routes();

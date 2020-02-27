@@ -7,6 +7,11 @@ use App\Post,
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('index');
+    }
+
     public function index()
     {
         $posts = Post::with('tags')->latest()->get();
@@ -43,6 +48,7 @@ class PostsController extends Controller
             'description' => $data['description'],
             'files' => null,
             'published' => $published,
+            'author_id' => auth()->id(),
         ]);
 
         $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
@@ -56,11 +62,15 @@ class PostsController extends Controller
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
+
         return view('posts.edit', compact('post'));
     }
 
     public function update(Post $post)
     {
+        $this->authorize('update', $post);
+
         $published = request('published') === 'on' ? true : false;
 
         $data = $this->validate(request(), [
@@ -100,6 +110,8 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
+
         $tagsToDetach = $post->tags->keyBy('name');
 
         $post->delete();

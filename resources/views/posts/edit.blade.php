@@ -56,10 +56,10 @@
             </div>
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
-        <form method="post" action="/posts/{{ $post->slug }}">
+        <form methThis action is unaod="post" action="/posts/{{ $post->slug }}">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn btn-danger">Удалить</button>
+            <button type="submit" class="btn btn btn-secondary">Удалить</button>
         </form>
     </div>
 @endsection

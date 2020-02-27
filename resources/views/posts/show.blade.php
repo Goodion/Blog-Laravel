@@ -12,7 +12,7 @@
                 </h3>
                 <div class="blog-post">
                     <h2 class="blog-post-title">{{ $post->title }}</h2>
-                    <p class="blog-post-meta">{{ $post->created_at }}</p>
+                    <p class="blog-post-meta">{{ $post->created_at }}, автор {{ $post->user->name }}</p>
                     <p>{!! $post->body !!}</p>
 
                     @include('posts.tags', ['tags' => $post->tags])
@@ -20,20 +20,22 @@
                 </div><!-- /.blog-post -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-6">
+                        @can('update', $post)
+                        <div class="col-auto mr-auto">
                             <form method="post" action="/posts/{{ $post->slug }}">
                                 @csrf
                                 @method('patch')
-                                <a href="/posts/{{ $post->slug }}/edit" class="btn btn-warning">Редактировать</a>
+                                <a href="/posts/{{ $post->slug }}/edit" class="btn btn-primary">Редактировать</a>
                             </form>
                         </div>
-                        <div class="col-6">
+                        <div class="col-auto">
                             <form method="post" action="/posts/{{ $post->slug }}">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn btn-danger">Удалить</button>
+                                <button type="submit" class="btn btn btn-secondary">Удалить</button>
                             </form>
                         </div>
+                        @endcan
                     </div>
                 </div>
             </div><!-- /.blog-main -->

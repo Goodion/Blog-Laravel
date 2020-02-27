@@ -9,6 +9,11 @@ class Post extends Model
 {
     public $guarded = [];
 
+    public function user()
+    {
+        return $this->belongsTo(\App\User::class, 'author_id');
+    }
+
     public function getRoutekeyName()
     {
         return 'slug';
