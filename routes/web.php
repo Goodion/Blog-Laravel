@@ -1,6 +1,9 @@
 <?php
 
 use App\Post;
+use App\Tag;
+
+Route::get('/posts/tags/{tag}', 'TagsController@index');
 
 Route::get('/', 'PostsController@index');
 Route::get('/posts/create', 'PostsController@create');

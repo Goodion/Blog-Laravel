@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2063943f-8762-403e-a16e-c9b085d34486" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/277d1f35-7662-41d3-bbf5-1059f5ccb1dc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/277d1f35-7662-41d3-bbf5-1059f5ccb1dc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Feedback.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Feedback.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Model.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_02_24_110543_create_posts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_02_24_110543_create_posts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/master.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout/sidebar.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/posts/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/posts/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/show.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
@@ -55,6 +59,20 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="learn: schema" type="76f4a085:MysqlImplModel$Schema" />
         <item name="feedbacks: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="learn@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="learn: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="posts: table" type="285a2a93:MysqlImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="learn@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="learn: schema" type="76f4a085:MysqlImplModel$Schema" />
+        <item name="tags: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
@@ -214,7 +232,9 @@
       <workItem from="1582112027670" duration="13000" />
       <workItem from="1582536653141" duration="25206000" />
       <workItem from="1582635902730" duration="2395000" />
-      <workItem from="1582716496381" duration="9319000" />
+      <workItem from="1582716496381" duration="12148000" />
+      <workItem from="1582753686432" duration="7205000" />
+      <workItem from="1582797946009" duration="7252000" />
     </task>
     <servers />
   </component>
@@ -226,7 +246,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
@@ -245,9 +267,10 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2698" y="314" width="424" height="491" key="FileChooserDialogImpl/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582638211335" />
-    <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog" timestamp="1582720054963">
+    <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog" timestamp="1582757320733">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
+    <state x="2710" y="479" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582757320733" />
     <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582720054963" />
     <state x="2710" y="479" width="399" height="156" key="NewPhpFileDialog/1920.0.1920.1080/70.27.1850.1053@1920.0.1920.1080" timestamp="1582556812245" />
     <state x="2404" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1582638297476">
@@ -255,9 +278,14 @@
     </state>
     <state x="2404" y="188" width="1022" height="737" key="SettingsEditor/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1581699313287" />
     <state x="2404" y="188" key="SettingsEditor/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582638297476" />
-    <state x="2571" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1582716501561">
+    <state x="2808" y="450" width="367" height="237" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1582727431903">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
+    <state x="2808" y="450" width="367" height="237" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582727431903" />
+    <state x="2571" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1582798055421">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="2571" y="381" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/0.27.1920.1053/3840.0.1600.900@1920.0.1920.1080" timestamp="1582798055421" />
     <state x="2571" y="381" key="com.intellij.ide.util.TipDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1582716501561" />
     <state x="2534" y="264" width="751" height="578" key="find.popup" timestamp="1582558986335">
       <screen x="1920" y="0" width="1920" height="1080" />

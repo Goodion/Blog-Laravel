@@ -41,6 +41,13 @@
                 <label for="post_body">Текст</label>
                 <textarea class="form-control" id="post_body" name="body">{{ old('body') }}</textarea>
             </div>
+            <div class="form-group">
+                <label for="inputTags">Теги</label>
+                <input class="form-control" id="inputTags" name="tags" value="{{ old('tags') }}">
+                <small id="inputTagsHelp" class="form-text text-muted">
+                    Введите теги через запятую, без пробелов.
+                </small>
+            </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="published" name="published">
                 <label class="form-check-label" for="published">Опубликовать</label>

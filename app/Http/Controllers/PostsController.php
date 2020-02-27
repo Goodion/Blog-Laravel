@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\Post,
+    App\Tag;
 
 class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->get();
-        return view('index', compact('posts'));
+        $posts = Post::with('tags')->latest()->get();
+        $tagsCloud = collect(Tag::all());
+        return view('index', compact('posts', 'tagsCloud'));
     }
 
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        $tagsCloud = collect(Tag::all());
+        return view('posts.show', compact('post', 'tagsCloud'));
     }
 
     public function create()
@@ -33,7 +36,7 @@ class PostsController extends Controller
             'description' => 'required|max:255',
         ]);
 
-        Post::create([
+        $post = Post::create([
             'title' => $data['title'],
             'body' => $data['body'],
             'slug' => $data['slug'],
@@ -41,6 +44,12 @@ class PostsController extends Controller
             'files' => null,
             'published' => $published,
         ]);
+
+        $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
+        foreach ($tags as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $post->tags()->attach($tag);
+        }
 
         return redirect('/');
     }
@@ -70,12 +79,36 @@ class PostsController extends Controller
             'published' => $published,
         ]);
 
+        $postTags = $post->tags->keyBy('name');
+        $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
+
+        $tagsToAttach = $tags->diffKeys($postTags);
+        $tagsToDetach = $postTags->diffKeys($tags);
+
+        foreach ($tagsToAttach as $tag) {
+            $tag = Tag::firstOrCreate(['name' => $tag]);
+            $post->tags()->attach($tag);
+        }
+
+        foreach ($tagsToDetach as $tag) {
+            $post->tags()->detach($tag);
+            $tag->deleteIfNotUsed();
+        }
+
         return redirect('/posts/' . $post->slug);
     }
 
     public function destroy(Post $post)
     {
+        $tagsToDetach = $post->tags->keyBy('name');
+
         $post->delete();
+
+        foreach ($tagsToDetach as $tag) {
+            $post->tags()->detach($tag);
+            $tag->deleteIfNotUsed();
+        }
+
 
         return redirect('/');
     }
