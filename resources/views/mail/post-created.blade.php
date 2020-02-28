@@ -1,6 +1,6 @@
 @component('mail::message')
 # Добавлена статья: {{ $post->title }}
-Автор - {{ $post->user->name }}
+Автор - {{ $post->author->name }}
 
 {{ $post->description }}
 

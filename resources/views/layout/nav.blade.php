@@ -6,7 +6,7 @@
             <a class="p-2 text-muted" href="/contacts">Контакты</a>
             <a class="p-2 text-muted" href="/feedbacks">Список обращений</a>
             <a class="p-2 text-muted" href="/about">О нас</a>
-            <a class="p-2 text-muted" href="/telescope">Админ. раздел</a>
+            <a class="p-2 text-muted" href="/admin">Админ. раздел</a>
         </nav>
     </div>
 </div>

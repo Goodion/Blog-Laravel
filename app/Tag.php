@@ -18,10 +18,9 @@ class Tag extends Model
         return $this->belongsToMany(Post::class);
     }
 
-    public function deleteIfNotUsed()
+    public static function TagsCloud()
     {
-        if ($this->posts()->first() == null) {
-            $this->delete();
-        }
+        return (new static)->has('posts')->get();
     }
+
 }

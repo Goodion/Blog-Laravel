@@ -12,20 +12,18 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except('index', 'show');
     }
 
     public function index()
     {
         $posts = Post::with('tags')->latest()->get();
-        $tagsCloud = collect(Tag::all());
-        return view('index', compact('posts', 'tagsCloud'));
+        return view('index', compact('posts'));
     }
 
     public function show(Post $post)
     {
-        $tagsCloud = collect(Tag::all());
-        return view('posts.show', compact('post', 'tagsCloud'));
+        return view('posts.show', compact('post'));
     }
 
     public function create()
@@ -44,15 +42,11 @@ class PostsController extends Controller
             'description' => 'required|max:255',
         ]);
 
-        $post = Post::create([
-            'title' => $data['title'],
-            'body' => $data['body'],
-            'slug' => $data['slug'],
-            'description' => $data['description'],
+        $post = Post::create(array_merge($data, [
             'files' => null,
             'published' => $published,
             'author_id' => auth()->id(),
-        ]);
+        ]));
 
         $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
         foreach ($tags as $tag) {
@@ -88,14 +82,10 @@ class PostsController extends Controller
             'description' => 'required|max:255',
         ]);
 
-        $post->update([
-            'title' => $data['title'],
-            'body' => $data['body'],
-            'slug' => $data['slug'],
-            'description' => $data['description'],
+        $post->update(array_merge($data, [
             'files' => null,
             'published' => $published,
-        ]);
+        ]));
 
         $postTags = $post->tags->keyBy('name');
         $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
@@ -110,7 +100,6 @@ class PostsController extends Controller
 
         foreach ($tagsToDetach as $tag) {
             $post->tags()->detach($tag);
-            $tag->deleteIfNotUsed();
         }
 
         $admin = \App\User::where('email', config('config.admin_email'))->first();
@@ -125,17 +114,10 @@ class PostsController extends Controller
     {
         $this->authorize('delete', $post);
 
-        $tagsToDetach = $post->tags->keyBy('name');
-
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostDeleted($post));
 
         $post->delete();
-
-        foreach ($tagsToDetach as $tag) {
-            $post->tags()->detach($tag);
-            $tag->deleteIfNotUsed();
-        }
 
         flash('Задача удалена', 'warning');
 
