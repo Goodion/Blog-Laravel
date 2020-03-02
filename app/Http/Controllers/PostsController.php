@@ -17,7 +17,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->latest()->get();
+        $posts = Post::with('tags')->latest()->get()->allCompleted();
         return view('index', compact('posts'));
     }
 
@@ -107,7 +107,7 @@ class PostsController extends Controller
 
         flash('Задача успешно изменена');
 
-        return redirect('/posts/' . $post->slug);
+        return back();
     }
 
     public function destroy(Post $post)

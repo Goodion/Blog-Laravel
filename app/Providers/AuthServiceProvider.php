@@ -27,9 +27,11 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         $gate->before(function ($user) {
-            if ($user->email == config('config.admin_email')) {
-                return true;
-            }
+                return $user->isAdmin();
+        });
+
+        $gate->define('adminPanel', function ($user) {
+            return $user->isAdmin();
         });
     }
 }

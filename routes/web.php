@@ -4,23 +4,26 @@ use App\Post;
 use App\Tag;
 
 Route::get('/posts/tags/{tag}', 'TagsController@index');
-Route::get('/', 'PostsController@index');
 
+Route::get('/', 'PostsController@index');
 Route::resource('posts', 'PostsController');
 
 Route::get('/contacts', function () {
-    $title = 'Контакты';
-    return view('contacts', compact('title'));
+    return view('contacts');
 });
 
 Route::get('/about', function () {
-    $title = 'О нас';
-    return view('about', compact('title'));
+    return view('about');
 });
 
 Route::get('/admin', function () {
-    $title = 'Панель администратора';
-    return view('admin', compact('title'));
+    $posts = Post::with('tags')->latest()->get();
+
+    if (Gate::allows('adminPanel')) {
+        return view('admin_panel', compact('posts'));
+    } else {
+        return back();
+    }
 });
 
 Route::get('/feedbacks', 'FeedbacksController@index');

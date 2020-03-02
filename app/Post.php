@@ -3,8 +3,10 @@
 namespace App;
 
 use App\Mail\PostEventMailNotification;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use PhpParser\Builder\Class_;
 
 class Post extends Model
 {
@@ -23,5 +25,21 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function isPublished()
+    {
+        return (bool) $this->published;
+    }
+
+    public function newCollection(array $models =[])
+    {
+        return new Class($models) extends Collection
+        {
+            public function allCompleted()
+            {
+                return $this->filter->isPublished();
+            }
+        };
     }
 }
