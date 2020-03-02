@@ -113,7 +113,6 @@ class PostsController extends Controller
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostDeleted($post));
 
@@ -121,6 +120,8 @@ class PostsController extends Controller
 
         flash('Задача удалена', 'warning');
 
-        return redirect('/');
+
+
+        return request('redirect') === 'back' ? back() : redirect('/');
     }
 }

@@ -45,6 +45,7 @@
                             <form method="post" action="/posts/{{ $post->slug }}">
                                 @csrf
                                 @method('DELETE')
+                                <input hidden name="redirect" value="back">
                                 <button type="submit" class="badge badge-danger">Del</button>
                             </form>
                         </td>

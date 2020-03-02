@@ -44,6 +44,6 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->email == config('config.admin_email');
+        return $this->email == \DB::table('predefined_administrator')->first()->email;
     }
 }
