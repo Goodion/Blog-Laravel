@@ -17,10 +17,11 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->text('body');
             $table->text('title');
-            $table->text('description');
+            $table->string('description');
             $table->boolean('published')->default(false);
-            $table->text('slug');
+            $table->string('slug');
             $table->text('files')->nullable();
+            $table->unsignedBigInteger('author_id');
             $table->timestamps();
         });
     }

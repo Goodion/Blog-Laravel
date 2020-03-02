@@ -1,11 +1,12 @@
 <?php
 
 use App\Post;
+use App\Tag;
 
+Route::get('/posts/tags/{tag}', 'TagsController@index');
 Route::get('/', 'PostsController@index');
-Route::get('/posts/create', 'PostsController@create');
-Route::post('/posts', 'PostsController@store');
-Route::get('/posts/{post}', 'PostsController@show');
+
+Route::resource('posts', 'PostsController');
 
 Route::get('/contacts', function () {
     $title = 'Контакты';
@@ -25,3 +26,5 @@ Route::get('/admin', function () {
 Route::get('/feedbacks', 'FeedbacksController@index');
 Route::post('/feedbacks', 'FeedbacksController@store');
 
+
+Auth::routes();

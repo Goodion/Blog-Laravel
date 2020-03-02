@@ -9,7 +9,6 @@ class FeedbacksController extends Controller
     public function index()
     {
         $feedbacks = Feedback::latest()->get();
-        $title = 'Обращения';
         return view('feedbacks.feedbacks', compact('feedbacks'));
     }
 
