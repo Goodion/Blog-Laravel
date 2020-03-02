@@ -30,10 +30,10 @@ Route::get('/admin', function () {
 });
 
 Route::post('/postsmailing', function () {
-    $dateFrom = request('fromDate');
-    $dateTo = request('toDate');
+    $dateFrom = request('dateFrom');
+    $dateTo = request('dateTo');
 
-    $emails = User::all()->pluck('email');
+    $emails = (new User)->getAllEmails();
 
     foreach ($emails as $email) {
         \Mail::to($email)->send(

@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->email == \DB::table('predefined_administrator')->first()->email;
     }
+
+    public function getAllEmails()
+    {
+        return $this->pluck('email');
+    }
 }

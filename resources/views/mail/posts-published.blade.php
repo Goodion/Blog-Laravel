@@ -1,5 +1,5 @@
 @component('mail::message')
-# С {{ $fromDate }} по {{ $toDate }} опубликованы:
+# С {{ $dateFrom }} по {{ $dateTo }} опубликованы:
 
 @foreach($posts as $post)
         Заголовок - {{ $post->title }}

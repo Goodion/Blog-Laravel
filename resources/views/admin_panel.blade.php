@@ -23,11 +23,11 @@
 
                     <div class="form-group">
                         <label for="fromDate">С даты:</label>
-                        <input type="date" class="form-control" id="fromDate" name="fromDate">
+                        <input type="date" class="form-control" id="fromDate" name="dateFrom">
                     </div>
                     <div class="form-group">
                         <label for="toDate">По дату:</label>
-                        <input type="date" class="form-control" id="toDate" name="toDate">
+                        <input type="date" class="form-control" id="toDate" name="dateTo">
                     </div>
                     <button type="submit" class="btn btn-primary">Разослать</button>
                 </form>

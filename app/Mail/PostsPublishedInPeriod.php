@@ -13,20 +13,20 @@ class PostsPublishedInPeriod extends Mailable
     use Queueable, SerializesModels;
 
     public $posts;
-    public $fromDate;
-    public $toDate;
+    public $dateFrom;
+    public $dateTo;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($fromDate, $toDate)
+    public function __construct($dateFrom, $dateTo)
     {
-        $this->fromDate = $fromDate . ' 00:00:00';
-        $this->toDate = $toDate . ' 23:59:59';
-        $this->posts = Post::whereBetween('updated_at', [$this->fromDate, $this->toDate])->get()->allCompleted();
-        
+        $this->dateFrom = $dateFrom . ' 00:00:00';
+        $this->dateTo = $dateTo . ' 23:59:59';
+        $this->posts = Post::whereBetween('updated_at', [$this->dateFrom, $this->dateTo])->get()->allCompleted();
+
     }
 
     /**

@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command('app:posts_mailing 2020-02-01 2020-03-01')->weeklyOn(1, '10:00');
     }
 
     /**
