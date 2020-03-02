@@ -12,6 +12,29 @@
 
 @section('page_content')
     <div class="container">
+        <div class="row my-3">
+            <div class="col-4"></div>
+            <div class="col-4 border">
+                <h5 class="text-center">Рассылка опубликованных статей за выбранные даты</h5>
+                <form method="post" action="/postsmailing">
+
+                    @csrf
+                    @method('POST')
+
+                    <div class="form-group">
+                        <label for="fromDate">С даты:</label>
+                        <input type="date" class="form-control" id="fromDate" name="fromDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="toDate">По дату:</label>
+                        <input type="date" class="form-control" id="toDate" name="toDate">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Разослать</button>
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+
          <table class="table table-bordered">
             <thead>
             <tr>
