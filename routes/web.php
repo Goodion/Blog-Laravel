@@ -1,6 +1,5 @@
 <?php
 
-use App\Post;
 use App\User;
 
 Route::get('/posts/tags/{tag}', 'TagsController@index');
@@ -19,29 +18,7 @@ Route::get('/about', function () {
 Route::get('/feedbacks', 'FeedbacksController@index');
 Route::post('/feedbacks', 'FeedbacksController@store');
 
-Route::get('/admin', function () {
-    $posts = Post::with('tags')->latest()->get();
-
-    if (Gate::allows('adminPanel')) {
-        return view('admin_panel', compact('posts'));
-    } else {
-        return back();
-    }
-});
-
-Route::post('/postsmailing', function () {
-    $dateFrom = request('dateFrom');
-    $dateTo = request('dateTo');
-
-    $emails = (new User)->getAllEmails();
-
-    foreach ($emails as $email) {
-        \Mail::to($email)->send(
-            new \App\Mail\PostsPublishedInPeriod($dateFrom, $dateTo)
-        );
-     }
-
-    return redirect('/admin');
-});
+Route::get('/admin', 'AdminPanelController@index');
+Route::post('/admin/postsmailing', 'AdminPanelController@postsMailing');
 
 Auth::routes();

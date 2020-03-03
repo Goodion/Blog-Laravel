@@ -16,7 +16,7 @@
             <div class="col-4"></div>
             <div class="col-4 border">
                 <h5 class="text-center">Рассылка опубликованных статей за выбранные даты</h5>
-                <form method="post" action="/postsmailing">
+                <form method="post" action="/admin/postsmailing">
 
                     @csrf
                     @method('POST')
