@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2",
         "barryvdh/laravel-ide-helper": "^2.6",
+        "curl/curl": "^2.2",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/telescope": "^3.1",

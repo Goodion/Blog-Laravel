@@ -3,6 +3,8 @@
 namespace App\Notifications;
 
 use App\Post;
+use App\Providers\TelegramMessageServiceProvider;
+use App\Service\TelegramMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -22,5 +24,10 @@ class PostCreated extends PostEvent
                     ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
                     ->line('Thank you for using our application!');
+    }
+
+    public function toTelegram($notifiable)
+    {
+        return $message = 'Создана статья ' . $this->post['title'];
     }
 }

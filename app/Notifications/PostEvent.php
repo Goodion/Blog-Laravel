@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Post;
+use App\Service\TelegramMessage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -32,7 +33,7 @@ class PostEvent extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['mail', TelegramMessage::class];
     }
 
     /**

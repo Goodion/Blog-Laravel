@@ -7,6 +7,7 @@ use App\Notifications\PostDeleted;
 use App\Notifications\PostUpdated;
 use App\Post,
     App\Tag;
+use App\Providers\TelegramMessageServiceProvider;
 
 class PostsController extends Controller
 {
