@@ -3,6 +3,7 @@
 return [
 
     'admin_email' => env('ADMIN_EMAIL'),
+    'admin_password' => password_hash(env('ADMIN_PASSWORD'), PASSWORD_DEFAULT),
 
     'telegramMessage' => [
         'token' => env('TELEGRAM_TOKEN'),
