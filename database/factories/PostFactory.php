@@ -17,5 +17,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'published' => $faker->boolean,
         'slug' => $slug,
         'files' => null,
+        'author_id' => $faker->name,
     ];
 });

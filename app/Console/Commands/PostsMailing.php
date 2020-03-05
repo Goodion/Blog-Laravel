@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class PostsMailing extends Command
@@ -12,7 +13,7 @@ class PostsMailing extends Command
      *
      * @var string
      */
-    protected $signature = 'app:posts_mailing {dateFrom : date from Y-m-d} {dateTo : date to Y-m-d}';
+    protected $signature = 'app:posts_mailing {dateFrom} {dateTo}';
 
     /**
      * The console command description.

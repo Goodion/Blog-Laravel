@@ -20,13 +20,11 @@ class PostUpdated extends PostEvent
     public function toMail($notifiable)
     {
         return (new MailMessage)->markdown('mail.post-updated', ['post' => $this->post])
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                ->subject('Статья изменена.');
     }
 
     public function toTelegram($notifiable)
     {
-        return $message = 'Изменена статья ' . $this->post['title'];
+        return 'Изменена статья ' . $this->post['title'];
     }
 }

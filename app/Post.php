@@ -36,10 +36,20 @@ class Post extends Model
     {
         return new Class($models) extends Collection
         {
-            public function allCompleted()
+            public function allPublished()
             {
                 return $this->filter->isPublished();
             }
         };
+    }
+
+    public function publishedInPeriod($dateFrom, $DateTo)
+    {
+        return $this->whereBetween('created_at', [$dateFrom, $DateTo])->get()->allPublished();
+    }
+
+    public function scopeCurrentAuthor($query)
+    {
+        return $query->where('author_id', '=', auth()->id());
     }
 }

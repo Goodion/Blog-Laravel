@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class AdminPanelController extends Controller
 {
@@ -21,16 +22,10 @@ class AdminPanelController extends Controller
 
     public function postsMailing()
     {
-        $dateFrom = request('dateFrom');
-        $dateTo = request('dateTo');
-
-        $emails = (new User)->getAllEmails();
-
-        foreach ($emails as $email) {
-            \Mail::to($email)->send(
-                new \App\Mail\PostsPublishedInPeriod($dateFrom, $dateTo)
-            );
-        }
+        Artisan::call('app:posts_mailing', [
+            'dateFrom' => request('dateFrom'),
+            'dateTo' => request('dateTo')
+        ]);
 
         return redirect('/admin');
     }

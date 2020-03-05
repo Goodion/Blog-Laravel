@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Post;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -23,10 +24,9 @@ class PostsPublishedInPeriod extends Mailable
      */
     public function __construct($dateFrom, $dateTo)
     {
-        $this->dateFrom = $dateFrom . ' 00:00:00';
-        $this->dateTo = $dateTo . ' 23:59:59';
-        $this->posts = Post::whereBetween('updated_at', [$this->dateFrom, $this->dateTo])->get()->allCompleted();
-
+        $this->dateFrom = (new Carbon($dateFrom))->toDateString();
+        $this->dateTo = (new Carbon($dateTo))->addDay()->toDateString();
+        $this->posts = (new Post)->publishedInPeriod($this->dateFrom, $this->dateTo);
     }
 
     /**

@@ -6,8 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class TelegramMessageServiceProvider extends ServiceProvider
 {
-    public $data;
-
     /**
      * Register services.
      *
@@ -15,15 +13,15 @@ class TelegramMessageServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->data = collect([
+        $data = collect([
             'token' => config('config.telegramMessage.token'),
             'admin_chatid' => config('config.telegramMessage.admin_chatid'),
             'curlopt_proxy' => config('config.telegramMessage.curlopt_proxy'),
             'curlopt_proxyuserpwd' => config('config.telegramMessage.curlopt_proxyuserpwd'),
         ]);
 
-        $this->app->singleton(\App\Service\TelegramMessage::class, function () {
-            return new \App\Service\TelegramMessage($this->data);
+        $this->app->singleton(\App\Service\TelegramMessage::class, function () use ($data) {
+            return new \App\Service\TelegramMessage($data);
         });
     }
 

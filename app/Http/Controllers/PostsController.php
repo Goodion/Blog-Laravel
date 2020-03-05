@@ -18,8 +18,8 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->latest()->get()->allCompleted();
-        $posts = $posts->merge(Post::where('author_id', '=', auth()->id())->with('tags')->latest()->get());
+        $posts = Post::with('tags')->currentAuthor()->orWhere('published', true)->latest()->get();
+
         return view('index', compact('posts'));
     }
 

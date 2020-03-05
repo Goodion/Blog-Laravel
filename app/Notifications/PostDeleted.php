@@ -20,13 +20,11 @@ class PostDeleted extends PostEvent
     public function toMail($notifiable)
     {
         return (new MailMessage)->markdown('mail.post-deleted', ['post' => $this->post])
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                ->subject('Удалена статья.');
     }
 
     public function toTelegram($notifiable)
     {
-        return $message = 'Удалена статья ' . $this->post['title'];
+        return 'Удалена статья ' . $this->post['title'];
     }
 }

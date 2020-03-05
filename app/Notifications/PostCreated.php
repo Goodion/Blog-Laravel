@@ -21,13 +21,11 @@ class PostCreated extends PostEvent
     public function toMail($notifiable)
     {
         return (new MailMessage)->markdown('mail.post-created', ['post' => $this->post])
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject('Добавлена новая статья.');
     }
 
     public function toTelegram($notifiable)
     {
-        return $message = 'Создана статья ' . $this->post['title'];
+        return 'Создана статья ' . $this->post['title'];
     }
 }
