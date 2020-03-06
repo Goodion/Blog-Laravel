@@ -22,11 +22,11 @@ class PostsPublishedInPeriod extends Mailable
      *
      * @return void
      */
-    public function __construct($dateFrom, $dateTo)
+    public function __construct(Carbon $dateFrom, Carbon $dateTo, $posts)
     {
-        $this->dateFrom = (new Carbon($dateFrom))->toDateString();
-        $this->dateTo = (new Carbon($dateTo))->addDay()->toDateString();
-        $this->posts = (new Post)->publishedInPeriod($this->dateFrom, $this->dateTo);
+        $this->dateFrom = $dateFrom->toDateString();
+        $this->dateTo = $dateTo->addDay()->toDateString();
+        $this->posts = $posts;
     }
 
     /**

@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Post;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Post::class, function (Faker $faker) {
@@ -17,6 +18,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'published' => $faker->boolean,
         'slug' => $slug,
         'files' => null,
-        'author_id' => $faker->name,
+        'author_id' => factory(User::class),
     ];
 });

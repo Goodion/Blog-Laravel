@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Post;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -40,10 +41,13 @@ class PostsMailing extends Command
     public function handle()
     {
         $emails = (new User)->getAllEmails();
+        $dateFrom = new Carbon($this->argument('dateFrom'));
+        $dateTo = new Carbon($this->argument('dateTo'));
+        $posts = (new Post)->publishedInPeriod($dateFrom, $dateTo);
 
         foreach ($emails as $email) {
             \Mail::to($email)->send(
-                new \App\Mail\PostsPublishedInPeriod($this->argument('dateFrom'), $this->argument('dateTo'))
+                new \App\Mail\PostsPublishedInPeriod($dateFrom, $dateTo, $posts)
             );
         }
     }
