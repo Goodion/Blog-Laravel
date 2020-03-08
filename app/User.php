@@ -41,4 +41,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin()
+    {
+        if ($this->email == config('config.admin_email')) {
+            return true;
+        }
+    }
+
+    public function getAllEmails()
+    {
+        return $this->pluck('email');
+    }
 }

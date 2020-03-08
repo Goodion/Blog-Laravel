@@ -20,7 +20,7 @@
         <form method="post" action="/posts/{{ $post->slug }}">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn btn-secondary">Удалить</button>
+            <button type="submit" class="btn btn-secondary">Удалить</button>
         </form>
     </div>
 @endsection

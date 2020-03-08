@@ -7,6 +7,7 @@ use App\Notifications\PostDeleted;
 use App\Notifications\PostUpdated;
 use App\Post,
     App\Tag;
+use App\Providers\TelegramMessageServiceProvider;
 
 class PostsController extends Controller
 {
@@ -17,7 +18,8 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->latest()->get();
+        $posts = Post::with('tags')->currentAuthor()->orWhere('published', true)->latest()->get();
+
         return view('index', compact('posts'));
     }
 
@@ -107,13 +109,12 @@ class PostsController extends Controller
 
         flash('Задача успешно изменена');
 
-        return redirect('/posts/' . $post->slug);
+        return back();
     }
 
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
-
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostDeleted($post));
 
@@ -121,6 +122,8 @@ class PostsController extends Controller
 
         flash('Задача удалена', 'warning');
 
-        return redirect('/');
+
+
+        return request('redirect') === 'back' ? back() : redirect('/');
     }
 }

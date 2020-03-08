@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command('app:posts_mailing', [
+            Carbon::today()->addDay()->toDateString(),
+            Carbon::today()->addWeek(-1)->toDateString()
+        ])->weeklyOn(1, '10:00');
     }
 
     /**
