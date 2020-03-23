@@ -38,6 +38,9 @@
                         @endcan
                     </div>
                 </div>
+
+                @include('comments.comments', ['comments' => $post->comments, 'action' => 'poststorecomment/' . $post->slug])
+
             </div><!-- /.blog-main -->
 
             @include('layout.sidebar')

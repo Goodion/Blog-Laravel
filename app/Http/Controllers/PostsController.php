@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Notifications\PostCreated;
 use App\Notifications\PostDeleted;
 use App\Notifications\PostUpdated;
@@ -18,7 +19,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->currentAuthor()->orWhere('published', true)->latest()->get();
+        $posts = Post::with('comments')->with('tags')->currentAuthor()->orWhere('published', true)->latest()->get();
 
         return view('index', compact('posts'));
     }
@@ -62,6 +63,23 @@ class PostsController extends Controller
         flash('Статья успешно создана');
 
         return redirect('/');
+    }
+
+    public function storeComment(Post $post, Comment $comment)
+    {
+        $this->authorize('update', $comment);
+
+        $this->validate(request(), [
+            'comment' => 'required|between:5,100'
+        ]);
+
+        $comment->author_id = auth()->id();
+        $comment->comment = request('comment');
+        $post->comments()->save($comment);
+
+        flash('Комментарий успешно добавлен');
+
+        return back();
     }
 
     public function edit(Post $post)

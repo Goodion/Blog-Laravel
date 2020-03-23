@@ -38,7 +38,12 @@
                         @endcan
                     </div>
                 </div>
+
+                @include('comments.comments', ['comments' => $news->comments, 'action' => 'newsstorecomment/' . $news->id])
+
             </div><!-- /.blog-main -->
+
+
 
             @include('layout.sidebar')
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\News;
 use App\Tag;
 use Illuminate\Http\Request;
@@ -13,24 +14,13 @@ class NewsController extends Controller
         $this->middleware('auth')->except('index', 'show');
     }
 
-        /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $news = News::with('tags')->latest()->get();
+        $news = News::with('tags')->with('comments')->latest()->get();
 
         return view('news.news', compact('news'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(News $news)
     {
         $this->authorize('update', $news);
@@ -55,23 +45,28 @@ class NewsController extends Controller
         return redirect('/news');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
+    public function storeComment(News $news, Comment $comment)
+    {
+        $this->authorize('update', $comment);
+
+        $this->validate(request(), [
+            'comment' => 'required|between:5,100'
+        ]);
+
+        $comment->author_id = auth()->id();
+        $comment->comment = request('comment');
+        $news->comments()->save($comment);
+
+        flash('Комментарий успешно добавлен');
+
+        return back();
+    }
+
     public function show(News $news)
     {
         return view('news.show', compact('news'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function edit(News $news)
     {
         $this->authorize('update', $news);
@@ -79,13 +74,6 @@ class NewsController extends Controller
         return view('news.edit', compact('news'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, News $news)
     {
         $this->authorize('update', $news);
@@ -115,12 +103,6 @@ class NewsController extends Controller
         return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\News  $news
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(News $news)
     {
         $this->authorize('delete', $news);

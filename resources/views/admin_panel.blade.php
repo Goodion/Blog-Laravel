@@ -13,7 +13,8 @@
 @section('page_content')
     <div class="container">
         <div class="row my-3">
-            <div class="container">
+            <div class="col-8 border">
+                <h5 class="text-center">Добавление новости</h5>
                 <form method="POST" action="/news">
 
                     @csrf
