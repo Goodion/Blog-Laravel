@@ -6,6 +6,7 @@ use App\Mail\PostEventMailNotification;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Arr;
 use PhpParser\Builder\Class_;
 
 class Post extends Model
@@ -56,5 +57,24 @@ class Post extends Model
     public function scopeCurrentAuthor($query)
     {
         return $query->where('author_id', '=', auth()->id());
+    }
+
+    public function history()
+    {
+        return $this->belongsToMany(\App\User::class, 'post_histories')->withPivot(['before', 'after'])->withTimestamps();
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function (Post $post) {
+
+            $after = $post->getDirty();
+            $post->history()->attach(auth()->id(), [
+                'before' => json_encode(Arr::only($post->fresh()->toArray(), array_keys($after))),
+                'after' => json_encode($after),
+            ]);
+        });
     }
 }

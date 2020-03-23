@@ -41,6 +41,17 @@
 
                 @include('comments.comments', ['comments' => $post->comments, 'action' => 'poststorecomment/' . $post->slug])
 
+                <hr>
+                <h4>Список изменений статьи</h4>
+                @forelse($post->history as $item)
+                    <p>Автор: {{ $item->name }}<br />
+                    Изменена {{ $item->pivot->created_at->diffForHumans() }}<br />
+                    Было {{ $item->pivot->before }}<br />
+                    Стало {{ $item->pivot->after }}</p>
+                @empty
+                    <p>Нет истории изменений</p>
+                @endforelse
+
             </div><!-- /.blog-main -->
 
             @include('layout.sidebar')
