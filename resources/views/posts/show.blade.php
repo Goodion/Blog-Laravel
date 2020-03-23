@@ -15,7 +15,7 @@
                     <p class="blog-post-meta">{{ $post->created_at }}, автор {{ $post->author->name }}</p>
                     <p>{!! $post->body !!}</p>
 
-                    @include('posts.tags', ['tags' => $post->tags])
+                    @include('tags.tags', ['tags' => $post->tags])
 
                 </div><!-- /.blog-post -->
                 <div class="container">

@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Редактирование статьи')
+@section('title', 'Редактирование новости')
 
 @section('content')
     <section class="jumbotron text-center">
@@ -9,14 +9,14 @@
         </div>
     </section>
     <div class="container">
-        <form method="POST" action="/posts/{{ $post->slug }}">
+        <form method="POST" action="/news/{{ $news->id }}">
 
             @csrf
             @method('PATCH')
-            @include('posts.form')
+            @include('news.form')
 
         </form>
-        <form method="post" action="/posts/{{ $post->slug }}">
+        <form method="post" action="/news/{{ $news->id }}">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-secondary">Удалить</button>

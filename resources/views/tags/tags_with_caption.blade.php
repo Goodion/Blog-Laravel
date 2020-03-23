@@ -1,4 +1,4 @@
-@extends('posts.tags')
+@extends('tags.tags')
 
 @section('caption')
     <div class="p-4 mb-3 bg-light rounded">

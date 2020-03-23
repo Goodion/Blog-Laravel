@@ -59,7 +59,7 @@ class PostsController extends Controller
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostCreated($post));
 
-        flash('Задача успешно создана');
+        flash('Статья успешно создана');
 
         return redirect('/');
     }
@@ -107,7 +107,7 @@ class PostsController extends Controller
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostUpdated($post));
 
-        flash('Задача успешно изменена');
+        flash('Статья успешно изменена');
 
         return back();
     }
@@ -120,7 +120,7 @@ class PostsController extends Controller
 
         $post->delete();
 
-        flash('Задача удалена', 'warning');
+        flash('Статья удалена', 'warning');
 
 
 
