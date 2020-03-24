@@ -27,4 +27,6 @@ Route::resource('news', 'NewsController');
 
 Route::resource('comments', 'CommentsController');
 
+Route::get('/statistics', 'StatisticsController@index');
+
 Auth::routes();
