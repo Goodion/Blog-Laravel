@@ -30,8 +30,8 @@ class StatisticsController extends Controller
                 'averagePosts'=> \DB::table('posts')
                     ->select(\DB::raw('count(*) as total'))
                     ->groupBy('author_id')
+                    ->havingRaw('COUNT(*) > 1')
                     ->get()
-                    ->where('total', '>', '1')
                     ->avg('total'),
                 'oftenUpdatedPost' => \DB::table('post_histories')
                     ->select(\DB::raw('count(*) as total'), 'title', 'slug')

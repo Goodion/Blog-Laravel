@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\News;
+use App\Service\CommentSaver;
+use App\Service\TagSaver;
 use App\Tag;
 use Illuminate\Http\Request;
 
@@ -30,15 +32,7 @@ class NewsController extends Controller
             'body' => 'required',
         ]));
 
-        $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
-        $syncIds = [];
-        foreach ($tags as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-
-            $syncIds[] = $tag->id;
-        }
-
-        $news->tags()->sync($syncIds);
+        (new TagSaver())->store($news);
 
         flash('Новость успешно создана');
 
@@ -49,15 +43,7 @@ class NewsController extends Controller
     {
         $this->authorize('update', $comment);
 
-        $this->validate(request(), [
-            'comment' => 'required|between:5,100'
-        ]);
-
-        $comment->author_id = auth()->id();
-        $comment->comment = request('comment');
-        $news->comments()->save($comment);
-
-        flash('Комментарий успешно добавлен');
+        (new CommentSaver())->store($news, $comment);
 
         return back();
     }

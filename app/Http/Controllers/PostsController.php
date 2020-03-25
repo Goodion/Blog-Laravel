@@ -9,6 +9,8 @@ use App\Notifications\PostUpdated;
 use App\Post,
     App\Tag;
 use App\Providers\TelegramMessageServiceProvider;
+use App\Service\CommentSaver;
+use App\Service\TagSaver;
 
 class PostsController extends Controller
 {
@@ -19,7 +21,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('comments')->with('tags')->currentAuthor()->orWhere('published', true)->latest()->get();
+        $posts = Post::with(['comments', 'tags'])->currentAuthor()->orWhere('published', true)->latest()->get();
 
         return view('index', compact('posts'));
     }
@@ -69,15 +71,7 @@ class PostsController extends Controller
     {
         $this->authorize('update', $comment);
 
-        $this->validate(request(), [
-            'comment' => 'required|between:5,100'
-        ]);
-
-        $comment->author_id = auth()->id();
-        $comment->comment = request('comment');
-        $post->comments()->save($comment);
-
-        flash('Комментарий успешно добавлен');
+        (new CommentSaver())->store($post, $comment);
 
         return back();
     }
@@ -107,20 +101,7 @@ class PostsController extends Controller
             'published' => $published,
         ]));
 
-        $postTags = $post->tags->keyBy('name');
-        $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
-
-        $tagsToAttach = $tags->diffKeys($postTags);
-        $tagsToDetach = $postTags->diffKeys($tags);
-
-        foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $post->tags()->attach($tag);
-        }
-
-        foreach ($tagsToDetach as $tag) {
-            $post->tags()->detach($tag);
-        }
+        (new TagSaver())->store($post);
 
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostUpdated($post));
