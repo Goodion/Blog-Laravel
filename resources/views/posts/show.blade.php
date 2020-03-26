@@ -39,7 +39,10 @@
                     </div>
                 </div>
 
-                @include('comments.comments', ['comments' => $post->comments, 'action' => 'poststorecomment/' . $post->slug])
+                @include('comments.comments', [
+                    'comments' => $post->comments,
+                    'action' => action('PostsController@storeComment', ['post' => $post->slug])
+                ])
 
                 <hr>
                 <h4>Список изменений статьи</h4>

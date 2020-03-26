@@ -36,7 +36,7 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store()
+    public function store(TagSaver $tagSaver)
     {
         $published = request('published') === 'on' ? true : false;
 
@@ -54,10 +54,7 @@ class PostsController extends Controller
         ]));
 
         $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
-        foreach ($tags as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $post->tags()->attach($tag);
-        }
+        $tagSaver->store($post, $tags);
 
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostCreated($post));
@@ -67,11 +64,16 @@ class PostsController extends Controller
         return redirect('/');
     }
 
-    public function storeComment(Post $post, Comment $comment)
+    public function storeComment(Post $post, Comment $comment, CommentSaver $commentSaver)
     {
         $this->authorize('update', $comment);
 
-        (new CommentSaver())->store($post, $comment);
+        $this->validate(request(), [
+            'comment' => 'required|between:5,100'
+        ]);
+        $comment->author_id = auth()->id();
+        $comment->comment = \request('comment');
+        $commentSaver->store($post, $comment);
 
         return back();
     }
@@ -83,7 +85,7 @@ class PostsController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Post $post)
+    public function update(Post $post, TagSaver $tagSaver)
     {
         $this->authorize('update', $post);
 
@@ -101,7 +103,8 @@ class PostsController extends Controller
             'published' => $published,
         ]));
 
-        (new TagSaver())->store($post);
+        $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
+        $tagSaver->store($post, $tags);
 
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostUpdated($post));

@@ -14,6 +14,7 @@ class NewsController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except('index', 'show');
+
     }
 
     public function index()
@@ -23,7 +24,7 @@ class NewsController extends Controller
         return view('news.news', compact('news'));
     }
 
-    public function store(News $news)
+    public function store(News $news, TagSaver $tagSaver)
     {
         $this->authorize('update', $news);
 
@@ -32,18 +33,24 @@ class NewsController extends Controller
             'body' => 'required',
         ]));
 
-        (new TagSaver())->store($news);
+        $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
+        $tagSaver->store($news, $tags);
 
         flash('Новость успешно создана');
 
         return redirect('/news');
     }
 
-    public function storeComment(News $news, Comment $comment)
+    public function storeComment(News $news, Comment $comment, CommentSaver $commentSaver)
     {
         $this->authorize('update', $comment);
 
-        (new CommentSaver())->store($news, $comment);
+        $this->validate(request(), [
+            'comment' => 'required|between:5,100'
+        ]);
+        $comment->author_id = auth()->id();
+        $comment->comment = \request('comment');
+        $commentSaver->store($news, $comment);
 
         return back();
     }
@@ -60,7 +67,7 @@ class NewsController extends Controller
         return view('news.edit', compact('news'));
     }
 
-    public function update(Request $request, News $news)
+    public function update(Request $request, News $news, TagSaver $tagSaver)
     {
         $this->authorize('update', $news);
 
@@ -69,20 +76,8 @@ class NewsController extends Controller
             'body' => 'required',
         ]));
 
-        $newsTags = $news->tags->keyBy('name');
         $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
-
-        $tagsToAttach = $tags->diffKeys($newsTags);
-        $tagsToDetach = $newsTags->diffKeys($tags);
-
-        foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $news->tags()->attach($tag);
-        }
-
-        foreach ($tagsToDetach as $tag) {
-            $news->tags()->detach($tag);
-        }
+        $tagSaver->store($news, $tags);
 
         flash('Новость успешно изменена');
 

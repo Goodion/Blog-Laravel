@@ -39,7 +39,10 @@
                     </div>
                 </div>
 
-                @include('comments.comments', ['comments' => $news->comments, 'action' => 'newsstorecomment/' . $news->id])
+                @include('comments.comments', [
+                    'comments' => $news->comments,
+                    'action' => action('NewsController@storeComment', ['news' => $news->id])
+                ])
 
             </div><!-- /.blog-main -->
 

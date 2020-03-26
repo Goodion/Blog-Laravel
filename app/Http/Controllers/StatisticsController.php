@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\News;
+use App\Post;
 use Illuminate\Http\Request;
 
 class StatisticsController extends Controller
@@ -9,8 +11,8 @@ class StatisticsController extends Controller
     public function index()
     {
         $statistics = collect([
-                'overallPosts' => \DB::table('posts')->count(),
-                'overallNews' => \DB::table('news')->count(),
+                'overallPosts' => Post::count(),
+                'overallNews' => News::count(),
                 'userWithMaxPosts' => \DB::table('posts')
                     ->select(\DB::raw('count(*) as total'), 'users.name')
                     ->groupBy('author_id')

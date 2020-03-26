@@ -25,8 +25,6 @@ Route::post('/admin/postsmailing', 'AdminPanelController@postsMailing');
 Route::post('/newsstorecomment/{news}', 'NewsController@storeComment');
 Route::resource('news', 'NewsController');
 
-Route::resource('comments', 'CommentsController');
-
 Route::get('/statistics', 'StatisticsController@index');
 
 Auth::routes();

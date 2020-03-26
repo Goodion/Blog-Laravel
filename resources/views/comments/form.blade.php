@@ -3,7 +3,7 @@
         @include('layout.errors')
 
         <div class="container">
-            <form method="POST" action="/{{ $action }}">
+            <form method="POST" action="{{ $action }}">
                 @csrf
                 <div class="form-group">
                     <label for="comment">Комментарий</label>

@@ -25,7 +25,7 @@
             </div>
             <div class="col-4 border">
                 <h5 class="text-center">Рассылка опубликованных статей за выбранные даты</h5>
-                <form method="post" action="/admin/postsmailing">
+                <form method="post" action="{{ action('AdminPanelController@postsMailing') }}">
 
                     @csrf
                     @method('POST')
