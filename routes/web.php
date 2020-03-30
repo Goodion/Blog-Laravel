@@ -2,8 +2,9 @@
 
 use App\User;
 
-Route::get('/posts/tags/{tag}', 'TagsController@index');
+Route::get('/tags/{tag}', 'TagsController@index');
 
+Route::post('/poststorecomment/{post}', 'PostsController@storeComment');
 Route::get('/', 'PostsController@index');
 Route::resource('posts', 'PostsController');
 
@@ -20,5 +21,10 @@ Route::post('/feedbacks', 'FeedbacksController@store');
 
 Route::get('/admin', 'AdminPanelController@index');
 Route::post('/admin/postsmailing', 'AdminPanelController@postsMailing');
+
+Route::post('/newsstorecomment/{news}', 'NewsController@storeComment');
+Route::resource('news', 'NewsController');
+
+Route::get('/statistics', 'StatisticsController@index');
 
 Auth::routes();

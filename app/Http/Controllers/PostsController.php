@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Notifications\PostCreated;
 use App\Notifications\PostDeleted;
 use App\Notifications\PostUpdated;
 use App\Post,
     App\Tag;
 use App\Providers\TelegramMessageServiceProvider;
+use App\Service\CommentSaver;
+use App\Service\TagSaver;
 
 class PostsController extends Controller
 {
@@ -18,7 +21,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with('tags')->currentAuthor()->orWhere('published', true)->latest()->get();
+        $posts = Post::with(['comments', 'tags'])->currentAuthor()->orWhere('published', true)->latest()->get();
 
         return view('index', compact('posts'));
     }
@@ -33,7 +36,7 @@ class PostsController extends Controller
         return view('posts.create');
     }
 
-    public function store()
+    public function store(TagSaver $tagSaver)
     {
         $published = request('published') === 'on' ? true : false;
 
@@ -51,17 +54,25 @@ class PostsController extends Controller
         ]));
 
         $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
-        foreach ($tags as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $post->tags()->attach($tag);
-        }
+        $tagSaver->store($post, $tags);
 
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostCreated($post));
 
-        flash('Задача успешно создана');
+        flash('Статья успешно создана');
 
         return redirect('/');
+    }
+
+    public function storeComment(Post $post, Comment $comment, CommentSaver $commentSaver)
+    {
+        $this->authorize('update', $comment);
+
+        return $commentSaver
+            ->setComment(request('comment'))
+            ->validate()
+            ->store($post);
+
     }
 
     public function edit(Post $post)
@@ -71,7 +82,7 @@ class PostsController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Post $post)
+    public function update(Post $post, TagSaver $tagSaver)
     {
         $this->authorize('update', $post);
 
@@ -89,25 +100,13 @@ class PostsController extends Controller
             'published' => $published,
         ]));
 
-        $postTags = $post->tags->keyBy('name');
         $tags = collect(explode(',', request('tags')))->keyBy(function ($item) { return $item; });
-
-        $tagsToAttach = $tags->diffKeys($postTags);
-        $tagsToDetach = $postTags->diffKeys($tags);
-
-        foreach ($tagsToAttach as $tag) {
-            $tag = Tag::firstOrCreate(['name' => $tag]);
-            $post->tags()->attach($tag);
-        }
-
-        foreach ($tagsToDetach as $tag) {
-            $post->tags()->detach($tag);
-        }
+        $tagSaver->store($post, $tags);
 
         $admin = \App\User::where('email', config('config.admin_email'))->first();
         $admin->notify(new PostUpdated($post));
 
-        flash('Задача успешно изменена');
+        flash('Статья успешно изменена');
 
         return back();
     }
@@ -120,7 +119,7 @@ class PostsController extends Controller
 
         $post->delete();
 
-        flash('Задача удалена', 'warning');
+        flash('Статья удалена', 'warning');
 
 
 

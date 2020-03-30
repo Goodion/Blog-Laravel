@@ -13,10 +13,19 @@
 @section('page_content')
     <div class="container">
         <div class="row my-3">
-            <div class="col-4"></div>
+            <div class="col-8 border">
+                <h5 class="text-center">Добавление новости</h5>
+                <form method="POST" action="/news">
+
+                    @csrf
+
+                    @include('news.form')
+
+                </form>
+            </div>
             <div class="col-4 border">
                 <h5 class="text-center">Рассылка опубликованных статей за выбранные даты</h5>
-                <form method="post" action="/admin/postsmailing">
+                <form method="post" action="{{ action('AdminPanelController@postsMailing') }}">
 
                     @csrf
                     @method('POST')

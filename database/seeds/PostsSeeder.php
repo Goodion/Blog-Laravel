@@ -12,7 +12,7 @@ class PostsSeeder extends Seeder
     public function run()
     {
         factory(\App\Post::class, 10)->create(
-                ['author_id' => factory(App\User::class)->create()->id]
+            ['author_id' => factory(App\User::class)->create()->id]
         );
 
         factory(\App\Post::class, 10)->create(
