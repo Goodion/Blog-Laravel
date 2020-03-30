@@ -45,14 +45,10 @@ class NewsController extends Controller
     {
         $this->authorize('update', $comment);
 
-        $this->validate(request(), [
-            'comment' => 'required|between:5,100'
-        ]);
-        $comment->author_id = auth()->id();
-        $comment->comment = \request('comment');
-        $commentSaver->store($news, $comment);
-
-        return back();
+        return $commentSaver
+            ->setComment(request('comment'))
+            ->validate()
+            ->store($news);
     }
 
     public function show(News $news)

@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('body');
-            $table->text('title');
+            $table->string('title');
             $table->string('description');
             $table->boolean('published')->default(false);
             $table->string('slug');
