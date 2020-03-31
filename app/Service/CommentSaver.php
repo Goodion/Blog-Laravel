@@ -4,6 +4,8 @@
 namespace App\Service;
 
 use App\Comment;
+use Doctrine\DBAL\Exception\DatabaseObjectExistsException;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 
 class CommentSaver
@@ -19,25 +21,22 @@ class CommentSaver
 
     public function validate()
     {
+
         $this->validator = Validator::make(
             ['comment' => $this->comment],
             ['comment' => 'required|between:5,100']
-        );
+        )->validate();
 
         return $this;
     }
 
     public function store($instance)
     {
-        if ($this->validator->fails()) {
-            return back()->withErrors($this->validator->errors())->withInput();;
-        }
-
         $comment = Comment::make();
         $comment->author_id = auth()->id();
         $comment->comment = $this->comment;
         $instance->comments()->save($comment);
 
-        return back()->with('message', 'Комментарий успешно добавлен');
+        return $this;
     }
 }

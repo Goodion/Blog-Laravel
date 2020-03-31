@@ -68,10 +68,15 @@ class PostsController extends Controller
     {
         $this->authorize('update', $comment);
 
-        return $commentSaver
+        $commentSaver
             ->setComment(request('comment'))
             ->validate()
-            ->store($post);
+            ->store($post)
+        ? flash('Комментарий успешно добавлен')
+        : flash('Произошла ошибка!', 'error')
+        ;
+
+        return back();
 
     }
 
