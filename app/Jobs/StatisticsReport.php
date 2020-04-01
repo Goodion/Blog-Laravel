@@ -2,7 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Comment;
+use App\News;
 use App\Notifications\StatisticsReportNotification;
+use App\Post;
+use App\Tag;
 use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,6 +38,40 @@ class StatisticsReport implements ShouldQueue
      */
     public function handle()
     {
-        $this->admin->notify(new StatisticsReportNotification($this->reports));
+        $reports = 'Отчёт.' . PHP_EOL;
+        if($this->reports) {
+            foreach ($this->reports as $key => $report) {
+                if(method_exists($this, $report)) {
+                    $reports .= $this->$report();
+                }
+            }
+        }
+
+        $this->admin->notify(new StatisticsReportNotification($reports));
+    }
+
+    protected function newsReport()
+    {
+        return 'Новостей: ' . News::count() . PHP_EOL;
+    }
+
+    protected function postsReport()
+    {
+        return 'Статей: ' . Post::count() . PHP_EOL;
+    }
+
+    protected function commentsReport()
+    {
+        return 'Комментариев: ' . Comment::count() . PHP_EOL;
+    }
+
+    protected function tagsReport()
+    {
+        return 'Тэгов: ' . Tag::count() . PHP_EOL;
+    }
+
+    protected function usersReport()
+    {
+        return 'Пользователей: ' . User::count() . PHP_EOL;
     }
 }

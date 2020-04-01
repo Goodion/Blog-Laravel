@@ -4,6 +4,7 @@ namespace App\Notifications;
 
 use App\Post;
 use App\Service\TelegramMessage;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
