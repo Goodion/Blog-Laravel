@@ -35,7 +35,7 @@ class AdminPanelController extends Controller
     {
         StatisticsReport::dispatch(\request('reports'), auth()->user())->onQueue('reports');
 
-        flash('Отчёт запрошен');
+        flash('Отчёт запрошен, ждём ответ.');
 
         return back();
     }

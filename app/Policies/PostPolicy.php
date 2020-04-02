@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Post;
 use App\User;
+use Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class PostPolicy

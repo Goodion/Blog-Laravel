@@ -62,6 +62,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
 
 Echo["private"]("App.User." + userId).notification(function (notification) {
   alert('URL: ' + notification.url + ' . Title: ' + notification.title + '. Changed fields: ' + notification.changes);
+  console.log(notification);
+});
+Echo["private"]("report-channel." + userId).listen('ReportFormed', function (e) {
+  alert(e.reports);
 });
 
 /***/ }),

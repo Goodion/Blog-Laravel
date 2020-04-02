@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Comment;
+use App\Events\ReportFormed;
 use App\News;
 use App\Notifications\StatisticsReportNotification;
 use App\Post;
@@ -48,6 +49,8 @@ class StatisticsReport implements ShouldQueue
         }
 
         $this->admin->notify(new StatisticsReportNotification($reports));
+
+        event(new ReportFormed($reports, $this->admin));
     }
 
     protected function newsReport()
