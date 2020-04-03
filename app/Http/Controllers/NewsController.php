@@ -45,10 +45,16 @@ class NewsController extends Controller
     {
         $this->authorize('update', $comment);
 
-        return $commentSaver
+        $commentSaver
             ->setComment(request('comment'))
             ->validate()
-            ->store($news);
+            ->store($news)
+            ? flash('Комментарий успешно добавлен')
+            : flash('Произошла ошибка!', 'error')
+        ;
+
+        return back();
+
     }
 
     public function show(News $news)

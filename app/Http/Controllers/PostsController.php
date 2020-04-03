@@ -12,6 +12,7 @@ use App\Providers\TelegramMessageServiceProvider;
 use App\Service\CommentSaver;
 use App\Service\TagSaver;
 
+
 class PostsController extends Controller
 {
     public function __construct()
@@ -66,12 +67,14 @@ class PostsController extends Controller
 
     public function storeComment(Post $post, Comment $comment, CommentSaver $commentSaver)
     {
-        $this->authorize('update', $comment);
-
-        return $commentSaver
+        if ($commentSaver
             ->setComment(request('comment'))
             ->validate()
-            ->store($post);
+            ->store($post)) {
+            flash('Комментарий успешно добавлен');
+        }
+
+        return back();
 
     }
 
@@ -120,8 +123,6 @@ class PostsController extends Controller
         $post->delete();
 
         flash('Статья удалена', 'warning');
-
-
 
         return request('redirect') === 'back' ? back() : redirect('/');
     }

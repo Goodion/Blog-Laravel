@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\StatisticsReport;
 use App\Post;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -30,4 +30,14 @@ class AdminPanelController extends Controller
 
         return redirect('/admin');
     }
+
+    public function reportsGeneration()
+    {
+        StatisticsReport::dispatch(\request('reports'), auth()->user())->onQueue('reports');
+
+        flash('Отчёт запрошен, ждём ответ.');
+
+        return back();
+    }
+
 }

@@ -21,6 +21,7 @@ Route::post('/feedbacks', 'FeedbacksController@store');
 
 Route::get('/admin', 'AdminPanelController@index');
 Route::post('/admin/postsmailing', 'AdminPanelController@postsMailing');
+Route::post('/admin/reports_generation', 'AdminPanelController@reportsGeneration');
 
 Route::post('/newsstorecomment/{news}', 'NewsController@storeComment');
 Route::resource('news', 'NewsController');

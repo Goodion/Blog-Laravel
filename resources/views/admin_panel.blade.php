@@ -13,8 +13,8 @@
 @section('page_content')
     <div class="container">
         <div class="row my-3">
-            <div class="col-8 border">
-                <h5 class="text-center">Добавление новости</h5>
+            <div class="col-12 border">
+                <h5 class="text-center pt-3">Добавление новости</h5>
                 <form method="POST" action="/news">
 
                     @csrf
@@ -23,8 +23,53 @@
 
                 </form>
             </div>
+            <div class="col-8 border">
+                <h5 class="text-center pt-3">Отбор статистики</h5>
+                <form method="POST" action="{{ action('AdminPanelController@reportsGeneration') }}">
+
+                    @csrf
+
+                    <div class="container">
+                        <div class="row py-3">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="newsReport" @if(is_array(request()->reports) && in_array('newsReport', request()->reports)) checked @endif>
+                                    <label class="form-check-label" for="newsReport">
+                                        Новости
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="postsReport" @if(is_array(request()->reports) && in_array('postsReport', request()->reports)) checked @endif>
+                                    <label class="form-check-label" for="postsReport">
+                                        Статьи
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="commentsReport" @if(is_array(request()->reports) && in_array('commentsReport', request()->reports)) checked @endif>
+                                    <label class="form-check-label" for="commentsReport">
+                                        Комментарии
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="tagsReport" @if(is_array(request()->reports) && in_array('tagsReport', request()->reports)) checked @endif>
+                                    <label class="form-check-label" for="tagsReport">
+                                        Теги
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="reports[]" value="usersReport" @if(is_array(request()->reports) && in_array('usersReport', request()->reports)) checked @endif>
+                                    <label class="form-check-label" for="usersReport">
+                                        Пользователи
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Сгенерировать</button>
+                    </div>
+                </form>
+            </div>
             <div class="col-4 border">
-                <h5 class="text-center">Рассылка опубликованных статей за выбранные даты</h5>
+                <h5 class="text-center pt-3">Рассылка опубликованных статей за выбранные даты</h5>
                 <form method="post" action="{{ action('AdminPanelController@postsMailing') }}">
 
                     @csrf
