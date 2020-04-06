@@ -25,7 +25,8 @@ class Tag extends Model
 
     public static function TagsCloud()
     {
-        return (new static)->has('posts')->orHas('news')->get();
+        return \Cache::tags(['skillbox_laravel_tags'])->remember('tagsCloud', 3600*24, function () {
+            return (new static)->has('posts')->orHas('news')->get();
+        });
     }
-
 }

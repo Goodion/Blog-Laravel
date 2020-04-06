@@ -8,7 +8,10 @@ class FeedbacksController extends Controller
 {
     public function index()
     {
-        $feedbacks = Feedback::latest()->get();
+        $feedbacks = \Cache::tags(['skillbox_laravel_feedbacks'])->remember('feedbacks', 3600*24, function () {
+            return Feedback::latest()->get();
+        });
+
         return view('feedbacks.feedbacks', compact('feedbacks'));
     }
 

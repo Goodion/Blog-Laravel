@@ -23,5 +23,7 @@ class TagSaver
         foreach ($tagsToDetach as $tag) {
             $instance->tags()->detach($tag);
         }
+
+        \Cache::tags(['skillbox_laravel_news', 'skillbox_laravel_tags', 'skillbox_laravel_posts'])->flush();
     }
 }

@@ -17,4 +17,21 @@ class Comment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function () {
+            \Cache::tags(['skillbox_laravel_comments'])->flush();
+        });
+
+        static::updated(function () {
+            \Cache::tags(['skillbox_laravel_comments'])->flush();
+        });
+
+        static::deleted(function () {
+            \Cache::tags(['skillbox_laravel_comments'])->flush();
+        });
+    }
 }

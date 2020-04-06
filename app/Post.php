@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Mail\PostEventMailNotification;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
@@ -40,13 +39,7 @@ class Post extends Model
 
     public function newCollection(array $models =[])
     {
-        return new Class($models) extends Collection
-        {
-            public function allPublished()
-            {
-                return $this->filter->isPublished();
-            }
-        };
+        return new PostsCollection($models);
     }
 
     public function publishedInPeriod($dateFrom, $DateTo)
@@ -75,6 +68,18 @@ class Post extends Model
                 'before' => json_encode(Arr::only($post->fresh()->toArray(), array_keys($after))),
                 'after' => json_encode($after),
             ]);
+        });
+
+        static::created(function () {
+            \Cache::tags(['skillbox_laravel_posts', 'skillbox_laravel_tags'])->flush();
+        });
+
+        static::updated(function () {
+            \Cache::tags(['skillbox_laravel_posts', 'skillbox_laravel_tags'])->flush();
+        });
+
+        static::deleted(function () {
+            \Cache::tags(['skillbox_laravel_posts', 'skillbox_laravel_tags'])->flush();
         });
     }
 }

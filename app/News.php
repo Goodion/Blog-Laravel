@@ -23,4 +23,21 @@ class News extends Model
     {
         return $this->morphMany(\App\Comment::class, 'commentable');
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function () {
+            \Cache::tags(['skillbox_laravel_news', 'skillbox_laravel_tags'])->flush();
+        });
+
+        static::updated(function () {
+            \Cache::tags(['skillbox_laravel_news', 'skillbox_laravel_tags'])->flush();
+        });
+
+        static::deleted(function () {
+            \Cache::tags(['skillbox_laravel_news', 'skillbox_laravel_tags'])->flush();
+        });
+    }
 }

@@ -14,12 +14,13 @@ class NewsController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except('index', 'show');
-
     }
 
     public function index()
     {
-        $news = News::with('tags')->with('comments')->latest()->get();
+        $news = \Cache::tags(['skillbox_laravel_news'])->remember('newsList', 3600*24, function () {
+            return News::with(['comments', 'tags'])->latest()->get();
+        });
 
         return view('news.news', compact('news'));
     }
@@ -59,6 +60,10 @@ class NewsController extends Controller
 
     public function show(News $news)
     {
+        $news = \Cache::tags(['skillbox_laravel_news'])->remember('news|' . $news->id, 3600*24, function () use ($news) {
+            return $news;
+        });
+
         return view('news.show', compact('news'));
     }
 
