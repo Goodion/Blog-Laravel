@@ -131,4 +131,6 @@
              @endforeach
          </table>
     </div>
+
+    <script src="{{ asset('js/report.js') }}" defer></script>
 @endsection
