@@ -9,6 +9,8 @@
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./summernote */ "./resources/js/summernote.js");
+
 __webpack_require__(/*! ./echo */ "./resources/js/echo.js");
 
 /***/ }),
@@ -64,8 +66,22 @@ Echo["private"]("App.User." + userId).notification(function (notification) {
   alert('URL: ' + notification.url + ' . Title: ' + notification.title + '. Changed fields: ' + notification.changes);
   console.log(notification);
 });
-Echo["private"]("report-channel." + userId).listen('ReportFormed', function (e) {
-  alert(e.reports);
+
+/***/ }),
+
+/***/ "./resources/js/summernote.js":
+/*!************************************!*\
+  !*** ./resources/js/summernote.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  $('#post_body').summernote({
+    placeholder: 'Введите текст',
+    tabsize: 2,
+    height: 300
+  });
 });
 
 /***/ }),

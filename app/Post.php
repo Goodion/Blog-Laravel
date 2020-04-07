@@ -3,14 +3,16 @@
 namespace App;
 
 use App\Mail\PostEventMailNotification;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use PhpParser\Builder\Class_;
+use App\HasCache;
 
 class Post extends Model
 {
+    use HasCache;
+
     public $guarded = [];
 
     public function getRoutekeyName()
@@ -40,13 +42,7 @@ class Post extends Model
 
     public function newCollection(array $models =[])
     {
-        return new Class($models) extends Collection
-        {
-            public function allPublished()
-            {
-                return $this->filter->isPublished();
-            }
-        };
+        return new PostsCollection($models);
     }
 
     public function publishedInPeriod($dateFrom, $DateTo)

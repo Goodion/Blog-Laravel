@@ -12,7 +12,9 @@ class AdminPanelController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('tags')->latest()->get();
+        $posts = \Cache::tags(['skillbox_laravel_posts'])->remember('admin_posts', 3600*24, function () {
+            return $posts = Post::with('tags')->latest()->get();
+        });
 
         if (\Gate::allows('adminPanel')) {
             return view('admin_panel', compact('posts'));

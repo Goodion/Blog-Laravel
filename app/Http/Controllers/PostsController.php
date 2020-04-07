@@ -22,13 +22,19 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::with(['comments', 'tags'])->currentAuthor()->orWhere('published', true)->latest()->get();
+        $posts = \Cache::tags(['skillbox_laravel_posts'])->remember('users_posts|' .auth()->id(), 3600*24, function () {
+            return Post::with(['comments', 'tags'])->currentAuthor()->orWhere('published', true)->latest()->get();
+        });
 
         return view('index', compact('posts'));
     }
 
     public function show(Post $post)
     {
+        $post = \Cache::tags(['skillbox_laravel_news'])->remember('post|' . $post->slug, 3600*24, function () use ($post) {
+            return $post;
+        });
+
         return view('posts.show', compact('post'));
     }
 
@@ -75,7 +81,6 @@ class PostsController extends Controller
         }
 
         return back();
-
     }
 
     public function edit(Post $post)

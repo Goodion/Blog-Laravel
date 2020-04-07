@@ -10,7 +10,8 @@ class StatisticsController extends Controller
 {
     public function index()
     {
-        $statistics = collect([
+        $statistics = \Cache::tags(['skillbox_laravel_posts', 'skillbox_laravel_news', 'skillbox_laravel_tags', 'skillbox_laravel_comments'])->remember('statistics', 3600*24, function () {
+            return collect([
                 'overallPosts' => Post::count(),
                 'overallNews' => News::count(),
                 'userWithMaxPosts' => \DB::table('posts')
@@ -48,7 +49,8 @@ class StatisticsController extends Controller
                     ->orderBy('total', 'desc')
                     ->leftJoin('posts', 'comments.commentable_id', '=', 'posts.id')
                     ->first(),
-        ]);
+            ]);
+        });
 
         return view('statistics', compact('statistics'));
     }
