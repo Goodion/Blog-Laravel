@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use PhpParser\Builder\Class_;
+use App\HasCache;
 
 class Post extends Model
 {
+    use HasCache;
+
     public $guarded = [];
 
     public function getRoutekeyName()
@@ -68,18 +71,6 @@ class Post extends Model
                 'before' => json_encode(Arr::only($post->fresh()->toArray(), array_keys($after))),
                 'after' => json_encode($after),
             ]);
-        });
-
-        static::created(function () {
-            \Cache::tags(['skillbox_laravel_posts', 'skillbox_laravel_tags'])->flush();
-        });
-
-        static::updated(function () {
-            \Cache::tags(['skillbox_laravel_posts', 'skillbox_laravel_tags'])->flush();
-        });
-
-        static::deleted(function () {
-            \Cache::tags(['skillbox_laravel_posts', 'skillbox_laravel_tags'])->flush();
         });
     }
 }
